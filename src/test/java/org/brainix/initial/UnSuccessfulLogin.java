@@ -1,15 +1,21 @@
-package org.brainix;
+package org.brainix.initial;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class SuccessfulLogin {
+import java.time.Duration;
+
+public class UnSuccessfulLogin {
     public WebDriver driver;
 
     @BeforeMethod
@@ -23,9 +29,8 @@ public class SuccessfulLogin {
         driver.quit();
     }
 
-    //Annotation - from TestNG
     @Test
-    public void successfulLogin(){
+    public void unSuccessfulLogin() throws InterruptedException {
         driver.get("https://brainix.5ea68fd9571344d0b183.germanywestcentral.aksapp.io/login");
 
         WebElement userNameInput = driver.findElement(By.id("loginPage-email-authValidatedInput"));
@@ -44,7 +49,15 @@ public class SuccessfulLogin {
         WebElement logInButton = driver.findElement(By.id("loginPage-primary-button-primaryButton-button"));
 
         logInButton.click();
+
+        //Thread.sleep(1000); we shall never use this!!!
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        WebElement invalidLoginErrorMessage = driver.findElement(By.id("loginPage-invalid-login"));
+
+        wait.until(ExpectedConditions.visibilityOf(invalidLoginErrorMessage));
+
+        Assert.assertTrue(invalidLoginErrorMessage.isDisplayed());
+        Assert.assertTrue(invalidLoginErrorMessage.isEnabled());
     }
-
-
 }
