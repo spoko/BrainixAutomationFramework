@@ -29,4 +29,13 @@ public class DataProviders {
             return null;
         }
     }
+
+    @DataProvider(name = "wrongUsers")
+    public Object[][] getWrongUsers() {
+        return new Object[][]{
+                {"wrongUsername", "secret_sauce"},
+                {"standard_user", "wrong password"},
+                {"wrong", "wrong"}
+        };
+    }
 }

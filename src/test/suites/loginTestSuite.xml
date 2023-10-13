@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Login Tests" thread-count="2" parallel="tests" annotations="JDK" verbose="1">
+    <test name="SuccessfulLogin">
+        <classes>
+        <class name="org.brainix.tests.SuccessfulLogin"/>
+        </classes>
+    </test>
+    <test name="OldLogin">
+        <classes>
+            <class name="POMtests.LoginTests"/>
+        </classes>
+    </test>
+</suite>
