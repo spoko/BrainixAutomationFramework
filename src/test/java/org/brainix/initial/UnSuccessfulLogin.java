@@ -51,6 +51,7 @@ public class UnSuccessfulLogin {
         logInButton.click();
 
         //Thread.sleep(1000); we shall never use this!!!
+        //Explicit wait: - shall be used without nay implicit waits
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         WebElement invalidLoginErrorMessage = driver.findElement(By.id("loginPage-invalid-login"));
