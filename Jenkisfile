@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "Maven"
+    }
+
+    stages {
+        stage('Getting the code') {
+            steps {
+                echo 'Getting the code'
+                git 'https://github.com/spoko/BrainixAutomationFramework.git'
+            }
+        }
+        stage('Run the login Tests'){
+            steps{
+                echo 'Running the tests'
+                sh 'mvn clean test'
+            }
+        }
+    }
+
+    post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results and archive the jar file.
+        always {
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/surefire-reports/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+        }
+    }
+}
